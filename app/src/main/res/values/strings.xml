@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Sharyar-CardioBook</string>
+    <string name="empty_not_saved">Record not saved because it is incomplete.</string>
+</resources>
