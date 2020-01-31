@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,22 +39,27 @@ public class NewRecordActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    CardioRecord cardioRecord = new CardioRecord(
-                            formatter.parse(mDate.getText().toString()),
-                            Integer.parseInt(mSystolic.getText().toString()),
-                            Integer.parseInt(mDiastolic.getText().toString()),
-                            Integer.parseInt(mHeartRate.getText().toString()),
-                            mComment.getText().toString());
+                if (mDate.getText().toString().isEmpty() || mSystolic.getText().toString().isEmpty()
+                        || mDiastolic.getText().toString().isEmpty() || mHeartRate.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "All fields except commmment are " +
+                            "required!", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        CardioRecord cardioRecord = new CardioRecord(
+                                formatter.parse(mDate.getText().toString()),
+                                Integer.parseInt(mSystolic.getText().toString()),
+                                Integer.parseInt(mDiastolic.getText().toString()),
+                                Integer.parseInt(mHeartRate.getText().toString()),
+                                mComment.getText().toString());
 
-                    Intent replyIntent = new Intent();
-                    replyIntent.putExtra("KEY", cardioRecord);
-                    setResult(RESULT_OK, replyIntent);
-                    finish();
+                        Intent replyIntent = new Intent();
+                        replyIntent.putExtra("KEY", cardioRecord);
+                        setResult(RESULT_OK, replyIntent);
+                        finish();
 
-                } catch (ParseException e) {
+                    } catch (ParseException e) {
+                    }
                 }
-
 
             }
         });

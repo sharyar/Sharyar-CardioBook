@@ -1,10 +1,10 @@
 package com.example.sharyar_cardiobook;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     ListView cardioList;
     ArrayAdapter<CardioRecord> cardioRecordArrayAdapter;
     ArrayList<CardioRecord> cardioRecordArrayList;
-    Button addRecord;
-    Button deleteRecord;
     int selectedCardioRecordIdx;
     private CardioRecordModel mCardioModel;
 
@@ -78,6 +76,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ItemClickSupport.addTo(recyclerView)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        selectedCardioRecordIdx = position;
+                        for (int j = 0; j < recyclerView.getChildCount(); j++)
+                            recyclerView.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
+                        v.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    }
+                });
+
+        FloatingActionButton deleteRecord = findViewById(R.id.deleteFab);
+        deleteRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCardioModel.delete(adapter.getCardioRecordAtPosition(selectedCardioRecordIdx));
+            }
+        });
 
     }
 }

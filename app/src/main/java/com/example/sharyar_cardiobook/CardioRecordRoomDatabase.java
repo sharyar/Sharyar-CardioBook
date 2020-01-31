@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {CardioRecord.class}, version = 1, exportSchema = false)
+@Database(entities = {CardioRecord.class}, version = 2, exportSchema = false)
 public abstract class CardioRecordRoomDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
