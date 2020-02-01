@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     //Declare the variables required for use later
 
     public static final int NEW_CARDIORECORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int UPDATE_CARDIORECORD_ACTIVITY_REQUEST_CODE = 2;
     ListView cardioList;
     ArrayAdapter<CardioRecord> cardioRecordArrayAdapter;
     ArrayList<CardioRecord> cardioRecordArrayList;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == NEW_CARDIORECORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             CardioRecord record = (CardioRecord) data.getExtras().getSerializable("KEY");
             mCardioModel.insert(record);
+        } else if (requestCode == UPDATE_CARDIORECORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            CardioRecord record = (CardioRecord) data.getExtras().getSerializable("KEY2");
+            mCardioModel.update(record);
         } else {
             Toast.makeText(
                     getApplicationContext(),
@@ -76,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton editRecord = findViewById(R.id.edit_fab);
+        editRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EditRecordActivity.class);
+                intent.putExtra("KEY1", adapter.getCardioRecordAtPosition(selectedCardioRecordIdx));
+                startActivityForResult(intent, UPDATE_CARDIORECORD_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
         ItemClickSupport.addTo(recyclerView)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -94,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 mCardioModel.delete(adapter.getCardioRecordAtPosition(selectedCardioRecordIdx));
             }
         });
+
 
     }
 }
