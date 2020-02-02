@@ -4,11 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 import java.io.Serializable;
 import java.util.Date;
 
+
+/*
+Please note that most of the database system used in this program is based upon information from:
+
+Author: Codelabs by Google
+Title: Android Room with a View - Java
+Url: https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#0
+
+There are some parts of the application where I also used the official reference documentation for
+Anrdoid from their main site: https://developer.android.com/docs to understand the funcationality
+as well as implement functionality that I needed.
+ */
 
 @Entity(tableName = "cardio_record")
 public class CardioRecord implements Serializable {
@@ -19,7 +30,7 @@ public class CardioRecord implements Serializable {
 
     // Declare variables required
 
-    @TypeConverters(DateConverter.class)
+
     private Date recordDate;
     private int systolic;
     private int diastolic;
@@ -91,13 +102,14 @@ public class CardioRecord implements Serializable {
         this.comment = comment;
     }
 
+
     @Override
     @NonNull
     public String toString() {
-
         String stringRepresentation;
-        stringRepresentation = String.format("Date: %tc - Systolic: %d - Diastolic: %d - Heart Rate: %d " +
-                "- Comment: %s", recordDate, systolic, diastolic, heartRate, comment);
+        stringRepresentation = String.format("Systolic: %d - Diastolic: %d - " +
+                        "Heart Rate: %d - Comment: %s", systolic, diastolic,
+                heartRate, comment);
 
         return stringRepresentation;
     }

@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Declare the variables required for use later
-
     public static final int NEW_CARDIORECORD_ACTIVITY_REQUEST_CODE = 1;
     public static final int UPDATE_CARDIORECORD_ACTIVITY_REQUEST_CODE = 2;
     ListView cardioList;
@@ -63,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mCardioModel = new ViewModelProvider(this).get(CardioRecordModel.class);
+        FloatingActionButton editRecord = findViewById(R.id.edit_fab);
+        editRecord.hide();
+        FloatingActionButton deleteRecord = findViewById(R.id.deleteFab);
+        deleteRecord.hide();
 
         mCardioModel.getmAllCardioRecords().observe(this, new Observer<List<CardioRecord>>() {
             @Override
@@ -80,16 +83,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton editRecord = findViewById(R.id.edit_fab);
+
         editRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EditRecordActivity.class);
+                Intent intent = new Intent(MainActivity.this, NewRecordActivity.class);
                 intent.putExtra("KEY1", adapter.getCardioRecordAtPosition(selectedCardioRecordIdx));
                 startActivityForResult(intent, UPDATE_CARDIORECORD_ACTIVITY_REQUEST_CODE);
             }
         });
 
+        deleteRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCardioModel.delete(adapter.getCardioRecordAtPosition(selectedCardioRecordIdx));
+            }
+        });
+
+        //Uses ItemClickSupport class. Please see class file for references
         ItemClickSupport.addTo(recyclerView)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -98,17 +109,9 @@ public class MainActivity extends AppCompatActivity {
                         for (int j = 0; j < recyclerView.getChildCount(); j++)
                             recyclerView.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
                         v.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        editRecord.show();
+                        deleteRecord.show();
                     }
                 });
-
-        FloatingActionButton deleteRecord = findViewById(R.id.deleteFab);
-        deleteRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCardioModel.delete(adapter.getCardioRecordAtPosition(selectedCardioRecordIdx));
-            }
-        });
-
-
     }
 }

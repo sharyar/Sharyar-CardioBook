@@ -5,10 +5,13 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -47,20 +50,29 @@ public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.Ca
      * to the textview within RecyclerView_item layout. We also use some conditional logic
      * here to mark any records that are outside the normal range of systolic and diastolic.
      */
+    DateFormat outputDateFormatter = new SimpleDateFormat("MMM d, YYYY");
+
     @Override
     public void onBindViewHolder(CardioViewHolder holder, int position) {
         if (mCardioRecords != null) {
             CardioRecord current = mCardioRecords.get(position);
             holder.cardioItemView.setText(current.toString());
-            if (current.getSystolic() < 90 || current.getSystolic() > 140 || current.getDiastolic() < 60 || current.getDiastolic() > 90)
-                holder.cardioItemView.setBackgroundColor(Color.RED);
+            holder.cardioItemView2.setText(outputDateFormatter.format(current.getRecordDate()));
+
+            if (current.getSystolic() < 90 || current.getSystolic() > 140 ||
+                    current.getDiastolic() < 60 || current.getDiastolic() > 90) {
+                holder.cardioBackView.setBackgroundColor(Color.RED);
+            }
             else {
-                holder.cardioItemView.setBackgroundColor(Color.TRANSPARENT);
+                holder.cardioBackView.setBackgroundColor(Color.TRANSPARENT);
+
             }
         } else {
             holder.cardioItemView.setText("No records");
+            holder.cardioItemView2.setText("");
         }
     }
+
 
     /**
      * This method is a setter for mCardioRecords arrayList. It also notifies views that
@@ -104,6 +116,8 @@ public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.Ca
      */
     class CardioViewHolder extends RecyclerView.ViewHolder {
         private final TextView cardioItemView;
+        private final TextView cardioItemView2;
+        private final LinearLayout cardioBackView;
 
         /**
          * Defines constructor for CardioViewHolder. The constructor calls the superclass constructor
@@ -114,7 +128,11 @@ public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.Ca
         private CardioViewHolder(View itemView) {
             super(itemView);
             cardioItemView = itemView.findViewById(R.id.textView);
+            cardioItemView2 = itemView.findViewById(R.id.textView2);
+            cardioBackView = itemView.findViewById(R.id.linearContainerCardioView);
         }
+
+
     }
 
 

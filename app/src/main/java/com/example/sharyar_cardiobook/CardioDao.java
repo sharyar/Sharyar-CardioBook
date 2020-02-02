@@ -26,7 +26,7 @@ public interface CardioDao {
     @Query("DELETE FROM cardio_record")
     void deleteAll();
 
-    @Query("SELECT * from cardio_record ORDER BY recordDate DESC")
+    @Query("SELECT * from cardio_record ORDER BY UniqueId ASC")
     LiveData<List<CardioRecord>> getSortedRecordsDESC();
 
     @Query("SELECT * from cardio_record ORDER BY recordDate ASC")
