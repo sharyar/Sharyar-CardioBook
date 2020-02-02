@@ -1,7 +1,6 @@
 package com.example.sharyar_cardiobook;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -18,7 +17,7 @@ import java.util.Calendar;
 //URL: https://android--examples.blogspot.com/2015/04/timepickerdialog-in-android.html
 
 /**
- * A simple {@link Fragment} subclass.
+ * The TimePicker fragment is used to display a dialog box for picking time when the user
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 

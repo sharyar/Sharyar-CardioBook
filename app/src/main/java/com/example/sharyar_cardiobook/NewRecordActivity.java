@@ -1,6 +1,5 @@
 package com.example.sharyar_cardiobook;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +14,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
+/**
+ * This Activity is used to add and update records.
+ */
 public class NewRecordActivity extends AppCompatActivity {
 
+    //Declare variables required for activity
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     CardioRecord editRecord;
     private EditText mDate;
@@ -32,8 +34,6 @@ public class NewRecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_record);
-
-
         /*
         Based on Jenokv.com Tech & Media Labs Tutorial
         Tutorial Title: Parsing & Formatting Dates in Java
@@ -57,8 +57,7 @@ public class NewRecordActivity extends AppCompatActivity {
 
         editRecord = (CardioRecord) parentIntent.getSerializableExtra("KEY1");
 
-
-        //Set the time button to display the dialog for entering time.
+        // Set the time button to display the dialog for entering time.
         setTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,8 +66,7 @@ public class NewRecordActivity extends AppCompatActivity {
             }
         });
 
-
-        //Also opens the date picker dialog if user double clicks the time EditText field twice
+        // Also opens the date picker dialog if user double clicks the time EditText field twice
         mTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +75,7 @@ public class NewRecordActivity extends AppCompatActivity {
             }
         });
 
+        // Set the date button to display the dialog for entering date.
         setDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +84,7 @@ public class NewRecordActivity extends AppCompatActivity {
             }
         });
 
+        // Also open the date dialog if user double clicks on the date field.
         mDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,9 +105,15 @@ public class NewRecordActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (mDate.getText().toString().isEmpty() || mSystolic.getText().toString().isEmpty()
-                            || mDiastolic.getText().toString().isEmpty() || mHeartRate.getText().toString().isEmpty()) {
+                            || mDiastolic.getText().toString().isEmpty() ||
+                            mHeartRate.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "All fields except comment are " +
                                 "required!", Toast.LENGTH_LONG).show();
+                    } else if (Integer.parseInt(mSystolic.getText().toString()) <= 0 ||
+                            Integer.parseInt(mDiastolic.getText().toString()) <= 0 ||
+                            Integer.parseInt(mHeartRate.getText().toString()) <= 0) {
+                        Toast.makeText(getApplicationContext(), "Systolic, Diastolic and Heart" +
+                                " Rate must be positive numbers.", Toast.LENGTH_LONG).show();
                     } else {
                         try {
                             CardioRecord cardioRecord = new CardioRecord(
@@ -124,6 +130,8 @@ public class NewRecordActivity extends AppCompatActivity {
                             finish();
 
                         } catch (ParseException e) {
+                            Toast.makeText(getApplicationContext(), "Is your date and time " +
+                                    "formatting correct?", Toast.LENGTH_LONG).show();
                         }
                     }
 

@@ -22,8 +22,11 @@ import java.util.List;
 public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.CardioViewHolder> {
 
     //Declare variables required for the app to run
-    private final LayoutInflater mInflater; //This layout inflater is used to inflate the recylerView_item layout
+    private final LayoutInflater mInflater; //This layout inflater is used to inflate the recyclerView_item layout
     private List<CardioRecord> mCardioRecords; //this array list is use to populate the recyclerView
+
+    //The date formatter is used to set the display format for the date in the recycleVview
+    DateFormat outputDateFormatter = new SimpleDateFormat("MMM d, YYYY");
 
     /**
      * Constructor for the class. Relies on context passed as a parameter to the method.
@@ -45,13 +48,11 @@ public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.Ca
 
     /**
      * The onBindViewHolder method gets called by bindViewHolder. It takes the array list of our
-     * records and display their string representation in the itemview within the holder that was
+     * records and display their string representation in the itemView within the holder that was
      * passed as a parameter to the method. In this case, it is the cardioItemView which is linked
-     * to the textview within RecyclerView_item layout. We also use some conditional logic
+     * to the textView within RecyclerView_item layout. We also use some conditional logic
      * here to mark any records that are outside the normal range of systolic and diastolic.
      */
-    DateFormat outputDateFormatter = new SimpleDateFormat("MMM d, YYYY");
-
     @Override
     public void onBindViewHolder(CardioViewHolder holder, int position) {
         if (mCardioRecords != null) {
@@ -65,7 +66,6 @@ public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.Ca
             }
             else {
                 holder.cardioBackView.setBackgroundColor(Color.TRANSPARENT);
-
             }
         } else {
             holder.cardioItemView.setText("No records");
@@ -122,9 +122,10 @@ public class CardioListAdapter extends RecyclerView.Adapter<CardioListAdapter.Ca
         /**
          * Defines constructor for CardioViewHolder. The constructor calls the superclass constructor
          * and sets the cardioItemView as textView in the layout. This allows us to link the layout
-         * with variable.
+         * with variable. It also sets the linearlayout as a view so we can change the background
+         * color of the items within the layout. Textview 2 is used to display the date of the
+         * record.
          */
-
         private CardioViewHolder(View itemView) {
             super(itemView);
             cardioItemView = itemView.findViewById(R.id.textView);

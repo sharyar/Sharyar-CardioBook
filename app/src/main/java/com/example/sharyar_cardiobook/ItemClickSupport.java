@@ -4,10 +4,15 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-//Stackoverflow post by Ovechkin Pavel https://stackoverflow.com/users/3005202/ovechkin-pavel
-//Answer: https://stackoverflow.com/a/39229357
-//This was based upon https://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/
+/*
+StackOverflow post by Ovechkin Pavel https://stackoverflow.com/users/3005202/ovechkin-pavel
+Answer: https://stackoverflow.com/a/39229357
+This was based upon https://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/
+ */
 
+/**
+ * This class is used for selection functionality within my mainActivity.
+ */
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;
